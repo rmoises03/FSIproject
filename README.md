@@ -4,6 +4,6 @@ Breve descrição do grupo
 * Turno: [L]XX
 * Grupo: YY
 * Alunos:
-    - Aluno1 upZZZZZ 
-    - Aluno2 upZZZZZ
-    - Aluno3 upZZZZZ
+    - Nelson Campos up202005083 
+    - Ntsay Zacarias up202008863
+    - Rodrigo Ribeiro up202108679
