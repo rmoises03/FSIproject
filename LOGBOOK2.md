@@ -3,10 +3,10 @@
 
 ## Identificação
 
-- item1
-- item2
-- item3
-- item4
+- CVE-2016-5195 é uma vulnerabilidade condição de corrida do Kernel de Linux tambem conhecida como "Dirty COW" descoberta por Phil Oester
+- "Dirty COW" afeta o mm/gup.c do Kernel de Linux 2.x a 4.x antes de 4.8.3
+- Apareceu na implementação do mecanismo de "copy-on-write" que permitia usuários locais elevar seus privilégios e acessar a root
+- 
 
 ## Catalogação
 
