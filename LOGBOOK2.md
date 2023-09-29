@@ -28,7 +28,7 @@
 [Proofs of Concept](https://github.com/dirtycow/dirtycow.github.io/wiki/PoCs) (Github)
 ## Ataques
 
-- item1
-- item2
-- item3
-- item4
+-Este ataque pode alterar um ficheiro de forma a que este realize funções diferentes, por exemplo um "keylogger".
+-Ao atacar um programa com "root privileges", o exploit ficará também com esses previlégios.
+-Este exploit foi utilizado de forma a efetuar uma burla através de aplicações do sistema android.
+-Este ataque consegue ter acesso às chaves ssh, comprometendo todo o seu uso.
