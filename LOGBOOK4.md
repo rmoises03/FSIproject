@@ -2,6 +2,8 @@ Task 1: Utilizamos o printenv e o env para dar “print” às variáveis de amb
 
 Task 2: Comparando as diferenças de ambos os files, usando o comando “diff”, percebemos que não há diferenças. 
 
+![image 1](docs/image/image1.png)
+
 Task 3: Executando essa alteração, observamos que o programa executado terá acesso às variáveis de ambiente do programa original. Concluímos assim, que as variáveis de ambiente não são passadas automaticamente usando “execve()”, tendo estas de serem passadas por argumentos.
 
 Task 4: Usando o “system()” ao invés do “execve()”, temos acesso às variáveis de ambiente do sistema completo, em vez de ser só as de utilizador.~
