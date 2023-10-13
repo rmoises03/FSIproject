@@ -1,4 +1,4 @@
-# CVE-2021-34646
+# CTF Semana #3 (Wordpress CVE)
  
 >Reconhecimento, Pesquisa e Escolha de Vulnerabilidades
 -  Iniciamos por fazer um inspect ao html do website para recolher informação sobre a versão do Wordpress e plugins instalados. 
