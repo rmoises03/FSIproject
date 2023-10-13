@@ -10,6 +10,6 @@ Task 4: Usando o “system()” ao invés do “execve()”, temos acesso às va
 
 Task 5: Ao contrário do espectável, apenas as variáveis PATH e ANY_NAME estavam presentes, faltando assim a LD_LIBRARY_PATH, que não estava disponível por questões de segurança.
 
-Task 6: Foi possível alterar o “PATH” para o programa, de forma a que ao executar o “a.out”, este executasse o nosso ficheiro “ls” que dava “print” em “You just got hacked!”, em vez de executar o “system(“ls”). Desta forma o códico malicioso está a correr com “root privilegie”.
+Task 6: Foi possível alterar o “PATH” para o programa, de forma a que ao executar o “a.out”, este executasse o nosso ficheiro “ls” que dava “print” em “You just got hacked!”, em vez de executar o “system(“ls”). Desta forma o códico malicioso está a correr com “root privilegie”. Percebemos que quando corremos outro terminal sem as mesmas funcionalidades de segurança, o programa corre com privilégios de "root".
 
 ![image 2](docs/images/1af0b6f8-cedf-4f9b-938f-ac3c58a0d097.jpg)
