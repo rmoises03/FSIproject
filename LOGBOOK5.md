@@ -33,10 +33,10 @@
 - Corremos o script e depois o programa e obtivemos uma shell com previlégios de root.
 
 
-**Task 4:**
-
-
 ![image 7](docs/images/Screenshot_from_2023-10-20_14-15-00.png))
+
+
+**Task 4:**
 
 
 
