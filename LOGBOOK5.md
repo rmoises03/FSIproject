@@ -28,7 +28,7 @@
 - - Colocamos o offset a 112, que é a distância entre o início do buffer e a address do return.
 - - Colocamos o ret a 0xffffcb48 + 4 + 200 para ser a address para onde queremos que o programa salte.
 
-![image 6](docs/images/Screenshot_from_2023-10-20_11-39-33.png))
+![image 6](docs/images/Screenshot_from_2023-10-20_14-32-30.png))
 
 - Corremos o script e depois o programa e obtivemos uma shell com previlégios de root.
 
