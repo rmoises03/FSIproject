@@ -17,6 +17,9 @@
 
 
 **Task 3:**
+Inicialmente, corremos o programa no modo debug para percebermos a localização das variáveis na stack. Colocamos um breakpoint.
+
+
 
 
 
