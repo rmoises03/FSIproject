@@ -48,9 +48,15 @@
 - Definimos o ret como 0xffffcab0 + 200 + 200, ou seja, 0xffffcab0 do endereço do buffer adicionado ao tamanho máximo do buffer, 200 bytes, adicionado a 200 bytes, grande o suficiente para ter em conta os diferentes adereços num ambiente sem debug e pequeno o suficiente para não ultrapassar o inicio do shell code.
 - Para o offset usámos um for loop para colocarmos o return address em vários sítios e pelo menos um estar no sitio certo, pois começa no buffer address e é colocado a cada 4 bytes.
 
+**Terminal**
+
 ![Terminal](docs/images/Captura%20de%20ecrã%202023-10-20%20211311.png)
 
+**exploit.py**
+
 ![exploit.py](docs/images/Captura%20de%20ecrã%202023-10-20%20215434.png)
+
+**Badfile depois de exploit.py**
 
 ![Badfile depois de exploit.py](docs/images/Captura%20de%20ecrã%202023-10-20%20215648.png)
 
