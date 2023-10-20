@@ -31,6 +31,8 @@ Durante a investigação do servidor verificámos que existiam dois admins que p
 
 Encontrámos um script a executar temporariamente que utiliza uma biblioteca partilhada, no entanto a vulnerabilidade não se encontrava no facto de ser uma biblioteca partilhada, mas sim  no ficheiro que contém as variáveis de ambiente a serem utilizadas pelo script ser um link para um ficheiro env da pasta /tmp podendo ser modificado pelo nobody(nós). Portanto é possível mudar a localização da biblioteca utilizada pelo programa e assim escrever uma função que será executada com permissão do flagreader acedendo à flag.
 
+A vulnerabilidade em causa encontra-se nas variáveis de ambiente, ou seja, existem mais maneiras de as explorarmos. Por exemplo, qualquer executável utilizado pelo programa pode ser reescrito e ser adicionado no inicio da varriável PATH.
+
 #### Código utilizado
 
     echo '
