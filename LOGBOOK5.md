@@ -90,6 +90,10 @@ r.sendline(payload)
 Resultando em: 
 ![](docs/images/VM_CTF_WEEK5-1.png)
 
+### DESAFIO 2
+
+Para este desafio efetuamos os mesmos passos que para o primeiro, no entanto adicionamos pwn.p32(pxfefc2324) entre b'A'*32 e b'flag.txt'. Assim conseguimos obter a flag
+
 
 
 
