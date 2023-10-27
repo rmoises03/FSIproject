@@ -116,4 +116,5 @@ r.sendline(payload)
 ```
 
 Resultando em:
+
 ![](docs/images/Captura_de_ecrã_2023-10-27_235209.png)
