@@ -62,6 +62,34 @@
 
 
 
+## CTF Semana #5 (Buffer Overflow)
+
+### DESAFIO 1
+
+Pudemos notar que o serviço **ctf-fsi.fe.up.pt:4003** a correr o programa realizava um echo do input do utilizador e decidimos nos aproveitar dessa vulnerabilidade.
+![](docs/images/ctfbufferncrsp.png)
+
+Com os ficheiros fornecidos, depois de uma análise ao código do main.c, pudemos notar que o *scanf()* permite-nos ler até 8 bytes além do limite da variável *buffer* com 32 bytes. 
+
+**main.c**
+```c
+char meme_file[8] = "mem.txt\0";
+char buffer[32];
+...
+scanf("%40s", &buffer);
+```
+
+Com isso, assumindo que na stack temos a váriavel *meme_file* e sabemos que ela está a ser usada pelo programa para abrir um ficheiro, com a ajuda do exploit *exploit-example.py* que interaje com o serviço. Aproveitamo-nos desse 'oversight' do scanf e mandamos uma payload de 32 bytes + o nome do ficheiro que pretendemos lêr.
+
+```python
+r.recvuntil(b":")
+payload = b"A" * 32 + b"flag.txt"
+r.sendline(payload)
+```
+
+Resultando em: 
+![](docs/images/VM_CTF_WEEK5-1.png)
+
 
 
 
