@@ -44,7 +44,7 @@ Resultando em:
 
 ### Task 2.2
 
-Para realizar o mesmo ataque de injeção SQL mas na CLI usamos o comando:
+Para realizar o mesmo ataque de SQL Injection mas na CLI usamos o comando:
 
 ```bash
 curl 'http://www.seed-server.com/unsafe_home.php?username=admin%27%20--%20&Password='
@@ -53,7 +53,7 @@ curl 'http://www.seed-server.com/unsafe_home.php?username=admin%27%20--%20&Passw
 
 ### Task 2.3
 
-Para adicionar uma nova instrução SQL normalmente usariamos um ponto e vírgula ;. No entanto, isto é prevenido como medida de segurança da extensão de PHP _mysqli_, para evitar a execução de múltiplas instruções numa só consulta.
+Para adicionar uma nova instrução normalmente usariamos um ponto e vírgula ;. No entanto, isto é prevenido como medida de segurança da extensão de PHP _mysqli_, para evitar a execução de múltiplas instruções numa só consulta.
 
 Exemplo de uma tentativa que foi bloqueada por esta contramedida:
 
@@ -63,8 +63,14 @@ Exemplo de uma tentativa que foi bloqueada por esta contramedida:
 
 ### Task 3
 
+### Tarefa 3.1
+Na página de edição de perfil, inserimos uma injeção SQL no campo `nickname`(mas podia ser qualquer um) usando o comando `', salary=12345678 WHERE name='Alice'; #`.
 
+### Tarefa 3.2
+Decidindo punir o nosso chefe utilizámos a página de edição de perfil para reduzir o salário dele, mas desta vez com o comando `', salary = '860' WHERE name='Boby'; #`.
 
+### Tarefa 3.3
+Para alterar a password do Boby usámos comando `', password=sha1('construtor') WHERE name='Boby'; #`. 
 
 
 
