@@ -10,10 +10,22 @@ Inicialmente adicionamos uma nova entrada nos hosts conhecidos pela máquina vir
 
 `dcup`:docker-compose up
 
-`docksh f3 `:Abrir uma shell do MySQL container
-
-`mysql -u root -pdees`:Executar o MySQL com utilizador root
-
-`use sqllab_users;`:Selecionar o schema pretendido
-
 ## Task1
+
+Começamos por correr o comando  `docker exec -it mysql-10.9.0.6 bash`, para abrir uma shell no container do MySQL. Em seguida usamos `mysql -u root -pdees` para login na base de dados. Para mostrar todas as tabelas dentro da mesma, usamos os seguintes comandos
+
+```sql
+use sqllab_users;
+show tables;
+```
+
+Finalmente para obtermos os dados da Alice corremos `SELECT * FROM credential WHERE name='Alice';`
+
+Resultando em
+![Add screenshot 1 here]()
+
+## Task2
+
+
+
+
