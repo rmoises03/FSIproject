@@ -32,7 +32,7 @@ Resultando em:
 
 ### Task 2.1
 
-Dado o trecho de código no ficheiro `unsafe_home.php`, a vulnerabilidade reside no facto de que as variáveis `input_uname` e `hashed_pwd` são inseridas diretamente na query sem a devida higienização. 
+Dado o trecho de código no ficheiro `unsafe_home.php`, a vulnerabilidade reside no facto de que as variáveis `input_uname` e `hashed_pwd` serem inseridas diretamente na query sem a devida higienização. 
 
 Uma vez que sabemos que o username da conta do administrador é "admin", conseguimos explorar a vulnerabilidade de SQL Injection introduzindo `admin' --` no input do username:
 
