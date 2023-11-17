@@ -24,7 +24,7 @@ show tables;
 Finalmente para obtermos os dados da Alice corremos `SELECT * FROM credential WHERE name='Alice'`
 
 Resultando em:
-![Add screenshot 1 here]()
+![](docs/images/task1.png)
 
 ## Task 2
 
@@ -40,7 +40,7 @@ Uma vez que sabemos que o username da conta do administrador é "admin", consegu
 O `--` efetivamente transforma o resto da query num comentário, ignorando a verificação da palavra-passe.
 
 Resultando em:
-![]()!
+![](docs/image/task2.1.png)
 
 ### Task 2.2
 
@@ -60,6 +60,7 @@ Exemplo de uma tentativa que foi bloqueada por esta contramedida:
     Utilizador: admin'; DROP TABLE credential; --
     Palavra-passe: (qualquer coisa ou deixar em branco)
 
+![](docs/images/task2.3.png)
 
 ### Task 3
 
@@ -70,7 +71,12 @@ Na página de edição de perfil, inserimos uma injeção SQL no campo `nickname
 Decidindo punir o nosso chefe utilizámos a página de edição de perfil para reduzir o salário dele, mas desta vez com o comando `', salary = '860' WHERE name='Boby'; #`.
 
 ### Tarefa 3.3
-Para alterar a password do Boby usámos comando `', password=sha1('construtor') WHERE name='Boby'; #`. 
+Para alterar a password do Boby usámos comando `', password=sha1('construtor') WHERE name='Boby'; #`.
+
+Resultado:
+![](docs/images/task3.png)
+
+
 
 
 
