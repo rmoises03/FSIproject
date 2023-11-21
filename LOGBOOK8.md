@@ -86,3 +86,6 @@ Começamos por analizar o ficheiro PHP(index.php) para tentar perceber como as q
 Tentámos de seguida os ataques mais comuns a nível de SQL injection.
 Primeiro tentamos "or""=" mas não resultou. Tentámos 'or''=' e assim conseguimos obter acesso de admistrador obtendo assim a flag.
 
+![](docs/images/Captura_de_ecrã_2023-11-21_174501.png)
+![](docs/images/Captura_de_ecrã_2023-11-21_175443.png)
+
