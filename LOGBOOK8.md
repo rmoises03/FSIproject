@@ -79,6 +79,10 @@ Resultado:
 ![](docs/images/task3.png)
 
 
+# CTF Semana #8 (SQL Injection)
 
+Começamos por analizar o ficheiro PHP(index.php) para tentar perceber como as queries SQL são formadas a partir do input do utilizador.
 
+Tentámos de seguida os ataques mais comuns a nível de SQL injection.
+Primeiro tentamos "or""=" mas não resultou. Tentámos 'or''=' e assim conseguimos obter acesso de admistrador obtendo assim a flag.
 
