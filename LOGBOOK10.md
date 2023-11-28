@@ -9,3 +9,8 @@
 - Este foi o primeiro parágrafo do texto "THE OSCARS TURN  ON SUNDAY WHICH SEEMS ABOUT RIGHT AFTER THIS LONG STRANGE
 AWARDS TRIP THE BAGGER FEELS LIKE A NONAGENARIAN TOO"
 
+## TASK 2
+
+-Começamos por executar o comando ```man enc``` para percebermos melhor os diferentes tipose de criptografia.
+-Experimentamos encriptar um fichiro de texto com os seguintes tipos de criptografia -aes-128-cbc, -bf-cbc,
+-aes-128-cfb.
