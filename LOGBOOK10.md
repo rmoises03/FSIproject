@@ -21,3 +21,6 @@ AWARDS TRIP THE BAGGER FEELS LIKE A NONAGENARIAN TOO"
 - Experimentamos visualizar a imagem depois de juntarmos o body com o header atraves do comando ```eog new.bmp```. Percebemos que esta encriptação permite continuarmos a percerber a imagem.
 - Por fim encriptamos segundo o modo CBC com o comando ```openssl enc -aes-128-cbc -e -in body -out body2 -K 00112233445566778889aabbccddeeff -iv 0102030405060708```. Visuzalizando esta imagem, não era possível perceber o seu conteúdo.
 - Concluímos que a segunda encriptação foi mais forte.
+
+
+#CTF
