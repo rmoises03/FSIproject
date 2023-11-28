@@ -11,6 +11,6 @@ AWARDS TRIP THE BAGGER FEELS LIKE A NONAGENARIAN TOO"
 
 ## TASK 2
 
--Começamos por executar o comando ```man enc``` para percebermos melhor os diferentes tipose de criptografia.
--Experimentamos encriptar um fichiro de texto com os seguintes tipos de criptografia -aes-128-cbc, -bf-cbc,
+- Começamos por executar o comando ```man enc``` para percebermos melhor os diferentes tipose de criptografia.
+- Experimentamos encriptar um fichiro de texto com os seguintes tipos de criptografia -aes-128-cbc, -bf-cbc,
 -aes-128-cfb.
