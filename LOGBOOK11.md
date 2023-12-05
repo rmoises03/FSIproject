@@ -1,8 +1,9 @@
-# Task 1: Becoming a Certificate Authority (CA)
+# Public-Key Infrastructure (PKI) Lab
+
+## Task 1: Becoming a Certificate Authority (CA)
 
  O objetivo era emitir certificados digitais sem pagar a CAs comerciais.
 
-## Passos Realizados
 
 1. **Preparação do ficheiro de configuração:**
    - Copiamos o arquivo de configuração padrão do OpenSSL, `openssl.cnf`, do diretório `/usr/lib/ssl` para o nosso diretório atual.
@@ -59,7 +60,7 @@ exponent2: [omitido para brevidade]
 coefficient: [omitido para brevidade]
 ~~~
 
-# Task 2: Generating a Certificate Request for Your Web Server
+## Task 2: Generating a Certificate Request for Your Web Server
 
 O objetivo desta tarefa é gerar uma CSR para o nosso servidor `www.l08g082023.com`, incluindo nomes alternativos no certificado.
 
@@ -95,4 +96,32 @@ Para abranger vários nomes de host no certificado, utilizamos a extensão SAN.
      ```
 
     screenshot
+
+## Task 3: Generating a Certificate for your server
+
+Nesta tarefa, nosso objetivo é assinar a CSR do servidor `www.l08g082023.com` com nossa própria CA para formar um certificado.
+
+### Assinando a CSR com a CA:
+
+   - Utilizamos o arquivo de configuração `myopenssl.cnf` da Task 1.
+
+   - Para permitir que a extensão SAN da CSR seja copiada para o certificado final descomentamos a linha `copy_extensions = copy`
+
+   - Com a CSR (`server.csr`) e as chaves da CA (`ca.crt` e `ca.key`), geramos o certificado para o servidor:
+     ```bash
+     openssl ca -in server.csr -out server.crt -config myopenssl.cnf \
+                 -extensions v3_req -extfile myopenssl.cnf \
+                 -policy policy_anything
+     ```
+
+   - Para confirmar que o certificado foi gerado corretamente e inclui os nomes alternativos, executamos:
+     ```bash
+     openssl x509 -in server.crt -text -noout
+     ```
+
+    screenshot
+
+> Movemos os ficheiros `ca.crt` e `ca.key` para novos diretorios dentro do demoCA. As linhas no `myopenssl.cnf` que apontavam para `./demoCA/private/cakey.pem` e `./demoCA/cacert.pem` foram atualizadas para o novo path.
+
+Com esses passos, assinamos a CSR para `www.l08g082023.com` com nossa CA, gerando um certificado que inclui os nomes alternativos especificados. Tornando este certificado pronto para utilizar no nosso servidor.
 
