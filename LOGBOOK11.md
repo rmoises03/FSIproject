@@ -1,6 +1,6 @@
 # Task 1: Becoming a Certificate Authority (CA)
 
- O objetivo era emitir certificados digitais sem pagar a CAs.
+ O objetivo era emitir certificados digitais sem pagar a CAs comerciais.
 
 ## Passos Realizados
 
@@ -42,7 +42,7 @@ Certificate:
         Subject Public Key Info:
             Public Key Algorithm: rsaEncryption
                 Public-Key: (4096 bit)
-                Modulus: [omitido para brevidade]
+                Modulus: [omitted for brevity]
                 Exponent: 65537 (0x10001)
         X509v3 extensions:
             X509v3 Basic Constraints: critical
@@ -58,3 +58,41 @@ exponent1: [omitido para brevidade]
 exponent2: [omitido para brevidade]
 coefficient: [omitido para brevidade]
 ~~~
+
+# Task 2: Generating a Certificate Request for Your Web Server
+
+O objetivo desta tarefa é gerar uma CSR para o nosso servidor `www.l08g082023.com`, incluindo nomes alternativos no certificado.
+
+
+1. **Geração da Chave Pública/Privada e CSR:**
+   - Executamos o seguinte command para gerar um par de chaves pública/privada e a CSR:
+     ```bash
+     openssl req -newkey rsa:2048 -sha256 \
+                 -keyout server.key -out server.csr \
+                 -subj "/CN=www.l08g082023.com/O=SeedServer Inc./C=US" \
+                 -passout pass:dees
+     ```
+   - Isso cria a (`server.key`) e a CSR (`server.csr`).
+
+   - Para verificar o conteúdo decodificado da CSR e da chave privada, usamos:
+     ```bash
+     openssl req -in server.csr -text -noout
+     openssl rsa -in server.key -text -noout
+     ```
+
+     screenshot
+
+Para abranger vários nomes de host no certificado, utilizamos a extensão SAN.
+
+1. **Incluindo SAN na CSR:**
+   - Modificamos o comando para adicionar nomes alternativos (SAN) na CSR.
+     ```bash
+     openssl req -newkey rsa:2048 -sha256 \
+                 -keyout server.key -out server.csr \
+                 -subj "/CN=www.l08g082023.com/O=SeedServer Inc./C=US" \
+                 -addext "subjectAltName = DNS:www.l08g082023.com, DNS:www.seed-server.com, DNS:www.zacarias2023.com, DNS:www.bank32.com" \
+                 -passout pass:dees
+     ```
+
+    screenshot
+
