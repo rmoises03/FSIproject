@@ -23,4 +23,71 @@ AWARDS TRIP THE BAGGER FEELS LIKE A NONAGENARIAN TOO"
 - Concluímos que a segunda encriptação foi mais forte.
 
 
-#CTF
+## CTF semana \#10 (Weak Encryption)
+
+#### Investigação
+
+Ao acedermos a **nc ctf-fsi.fe.up.pt 6003** obtinhamos o **nonce** e **ciphertext** 
+
+![image of nonce and ciphertext](docs/images/Captura_de_ecrã_2023-12-06_192340.png)
+
+Também tinhamos acesso ao ficheiro **cipherspec.py** que tinha um truque que acelerava a cifração de mensagens com apenas uma linha de código, no entanto esse truque era uma vulnerabilidade.
+
+#### Vulnerabilidade
+
+A vulnerabilidade consiste na linha `offset = 3` que era usada na geração da **key** criando um bytearray que não tinha muita variação, apenas nos 3 últimos bytes, sendo assim possível de achar pelo método de **brute-force** em tempo viável.
+
+#### Código utilizado
+
+Utilizámos o sequinte código para fazer iterar por todas as key possíveis até encontrarmos uma mensagem que iniciasse por **"flag{"**.
+
+```py
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.backends import default_backend
+import os
+import binascii
+
+def dec(k, c, nonce):
+	cipher = Cipher(algorithms.AES(k), modes.CTR(nonce), backend=default_backend())
+	decryptor = cipher.decryptor()
+	msg = b""
+	msg += decryptor.update(c)
+	msg += decryptor.finalize()
+	return msg
+
+
+def increment_bytearray(byte_array):
+    index = len(byte_array) - 1
+    while index >= 0:
+        byte_array[index] = (byte_array[index] + 1) % 256
+        if byte_array[index] != 0:
+            break
+        index -= 1
+    return byte_array
+
+def exploit():
+	k = bytearray(b'\x00'*(KEYLEN))
+	c = binascii.unhexlify("04f30ef0cec3968db05c2b9737e71adab871aabb1764e0a7bd26dcfbb9791de4623330624fef4e")
+	nonce = binascii.unhexlify("517dacdc51d264690bf9cf43b9a64ea1")
+
+	res = b""
+	while not res.startswith(b'flag{'):
+		#print(k)
+		res = dec(bytes(k),c,nonce)
+		k = increment_bytearray(k)
+		
+	print('key:', k)
+	print(res.decode())
+	return res.decode()
+
+exploit()
+```
+
+Obtívemos a seguinte flag para a seguinte key:
+
+![image of bytearray of the key and the flag](docs/images/Captura_de_ecrã_2023-12-06_195912.png)
+
+
+#### Prevenção
+
+Respeitar as "boas práticas" da criptografia.
