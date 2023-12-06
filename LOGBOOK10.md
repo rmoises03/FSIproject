@@ -35,13 +35,13 @@ Também tinhamos acesso ao ficheiro **cipherspec.py** que tinha um truque que ac
 
 #### Vulnerabilidade
 
-A vulnerabilidade consiste na linha `offset = 3` que era usada na geração da **key** criando um bytearray que não tinha muita variação, apenas nos 3 últimos bytes, sendo assim possível de achar pelo método de **brute-force** em tempo viável.
+A vulnerabilidade consiste na linha `offset = 3` que era usada na geração da **key** criando um bytearray que não tinha muita variação, apenas nos 3 últimos bytes, sendo assim possível de achar a **key** pelo método de **brute-force** em tempo viável.
 
 #### Código utilizado
 
 Utilizámos o sequinte código para fazer iterar por todas as key possíveis até encontrarmos uma mensagem que iniciasse por **"flag{"**.
 
-```py
+```python
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 import os
