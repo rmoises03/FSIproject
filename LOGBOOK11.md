@@ -125,3 +125,111 @@ Nesta tarefa, nosso objetivo é assinar a CSR do servidor `www.l08g082023.com` c
 
 Com esses passos, assinamos a CSR para `www.l08g082023.com` com nossa CA, gerando um certificado que inclui os nomes alternativos especificados. Tornando este certificado pronto para utilizar no nosso servidor.
 
+## CTF Semana \#11 - (RSA)
+
+A partir de `nc ctf-fsi.fe.up.pt 6004` obtemos a módulo associado (n), o expoente público (e) e a flag cifrada utilizando RSA.
+
+![image of e, n and cyphertext](docs/images/Captura_de_ecrã_2023-12-15_200433.png)
+
+### Código usado
+
+Implementámos o algoritmo de Miller-Rabin para encontrar primos prováveis e por brute-force procurámos o *p* e o *q* (à volta de 2<sup>512</sup> e 2<sup>513</sup>, respetivamente) que satisfaziam a condição `p * q == n`.
+
+Descobertos o *p* e o *q*, calculámos o *d* e usámos a função `dec(y,d,n)` para descubrir a flag.
+
+```py
+import os
+import sys
+import random
+from binascii import hexlify, unhexlify
+
+def enc(x, e, n):
+    int_x = int.from_bytes(x, "little")
+    y = pow(int_x, e, n)
+    return hexlify(y.to_bytes(256, 'little'))
+
+def dec(y, d, n):
+    int_y = int.from_bytes(unhexlify(y), "little")
+    x = pow(int_y, d, n)
+    return x.to_bytes(256, 'little')
+
+def miller_rabin(n, k=40):
+    if n == 2 or n == 3:
+        return True
+    if n % 2 == 0:
+        return False
+    r, s = 0, n - 1
+    while s % 2 == 0:
+        r += 1
+        s //= 2
+    for _ in range(k):
+        a = random.randrange(2, n - 1)
+        x = pow(a, s, n)
+        if x == 1 or x == n - 1:
+            continue
+        for _ in range(r - 1):
+            x = pow(x, 2, n)
+            if x == n - 1:
+                break
+        else:
+            return False
+    return True
+
+def egcd(a, b):
+    if a == 0:
+        return b, 0, 1
+    else:
+        g, y, x = egcd(b % a, a)
+        return g, x - (b // a) * y, y
+
+def modinv(e, t):
+    g, x, y = egcd(e, t)
+    if g != 1:
+        raise Exception('Modular inverse does not exist')
+    else:
+        return x % t
+
+def find_primes_around(base, offset=2000):
+    primes = []
+    for i in range(-offset, offset):
+        candidate = base + i
+        if miller_rabin(candidate):
+            primes.append(candidate)
+    return primes
+
+p_base = 2**512
+q_base = 2**513
+n = 359538626972463181545861038157804946723595395788461314546860162315465351611001926265416954644815072042240227759742786715317579537628833244985694861278999587252099537054025239494322569387314306730633214178413315054444311999156077374322000597769335547551326153354168651568613515494246376025995607101292746067011
+e = 65537
+
+p_candidates = find_primes_around(p_base)
+q_candidates = find_primes_around(q_base)
+
+c = '3163613735623235636538646430373466646432303364386264653038353766383731663430343165336134393935333239396462346461336333316336643531373866653130356465333439666161613463306266613239366531633361363238336661346638383061313431366663613534373737323838393664653730646561616665633661366662373063313533326363623466666230626535656264633734363635393530376438396661356336656331393333663439663163656562616134666432333932613338376235323935313766386437333563656535666338333836633337626536613031666366636135313534323637663034363130303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030'
+
+# Find the actual p and q
+for p in p_candidates:
+    for q in q_candidates:
+        if p * q == n:
+            p1 = p
+            q2 = q
+            print(f"Found p: {p}, q: {q}")
+            d = modinv(e, (p - 1) * (q - 1))
+            print(f"Calculated d: {d}")
+            break
+    else:
+        continue
+    break
+else:
+    print("Could not find p and q")
+    sys.exit(1)
+
+decrypted_message = dec(unhexlify(c.encode()), d, n).decode()
+
+print(f"MESSAGE:{decrypted_message}")
+```
+
+**p, q, d e a flag após serem descobertos.**
+
+![image of p, q, d and flag](docs/images/Captura_de_ecrã_2023-12-15_200119.png
+)
