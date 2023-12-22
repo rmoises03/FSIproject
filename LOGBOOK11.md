@@ -125,6 +125,87 @@ Nesta tarefa, nosso objetivo é assinar a CSR do servidor `www.l08g082023.com` c
 
 Com esses passos, assinamos a CSR para `www.l08g082023.com` com nossa CA, gerando um certificado que inclui os nomes alternativos especificados. Tornando este certificado pronto para utilizar no nosso servidor.
 
+
+## Task 4: Deploying Certificate in an Apache-Based HTTPS Website
+
+Depois de start o container corremos os seguintes comandos:
+
+![](docs/images/apacheserverlogbook11.png)
+
+![](docs/images/apachesslconflogbook11.png)
+
+Ao tentar aceder o webiste
+
+![](docs/images/unableaccesslogbook11.png)
+
+![](docs/images/bank32.com.png)
+
+
+# Task 5 : Launching a Man-In-The-Middle Attack
+
+
+1. **Configuramos o Apache para simular `www.l08g082023.com`**:
+     ```bash
+    <VirtualHost *:443>
+        DocumentRoot /var/www/l08g082023
+        ServerName www.l08g082023.com
+        DirectoryIndex index.html
+        ServerAlias www.bank32A.com
+        ServerAlias www.bank32B.com
+        ServerAlias www.bank32W.com
+        DirectoryIndex index.html
+        SSLEngine On 
+        SSLCertificateFile /certs/l08g082023.crt
+        SSLCertificateKeyFile /certs/l08g082023.key
+    </VirtualHost>
+
+    <VirtualHost *:80> 
+        DocumentRoot /var/www/l08g082023
+        ServerName www.l08g082023.com
+        DirectoryIndex index_red.html
+    </VirtualHost>
+
+     ```
+2. **Restart do service**
+     ```bash
+     service apache2 restart
+     ```
+3. **Modificamos o ficheiro `/etc/hosts`:**
+
+![](docs/images/etchosts.png)
+
+4. **Ao aceder o website:**
+
+![](docs/images/dupedwebsite.png)
+
+# Task 6 : Launching a Man-In-The-Middle Attack with a Compromised CA
+
+Para podermos torna-nos o MITM, alteramos o nome do servidor target no ficheiro de configuração:
+
+ ```bash
+    <VirtualHost *:443>
+        DocumentRoot /var/www/bank32
+        ServerName www.github.com
+        DirectoryIndex index.html
+        ServerAlias www.bank32A.com
+        ServerAlias www.bank32B.com
+        ServerAlias www.bank32W.com
+        DirectoryIndex index.html
+        SSLEngine On 
+        SSLCertificateFile /certs/bank32.crt
+        SSLCertificateKeyFile /certs/bank32.key
+    </VirtualHost>
+
+    <VirtualHost *:80> 
+        DocumentRoot /var/www/bank32
+        ServerName www.bank32.com
+        DirectoryIndex index_red.html
+    </VirtualHost>
+     ```
+
+
+![](docs/images/githu_duped.png)
+
 ## CTF Semana \#11 - (RSA)
 
 A partir de `nc ctf-fsi.fe.up.pt 6004` obtemos a módulo associado (n), o expoente público (e) e a flag cifrada utilizando RSA.
