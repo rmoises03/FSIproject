@@ -41,6 +41,37 @@ pkt = sniff(iface='br-95e4991e848b', filter='icmp', prn=print_pkt)
 
 ## Task 1.2
 
+Usamos o container hostA, de IP 10.9.0.5, como destino e enviámos um ICMP packet usando um IP aletório (1.2.3.4).
+
+Desta maneira, nós "spoofed" um pacote de solicitação de eco ICMP e o enviamos para outro contêiner na mesma sub-rede. Utilizamos o Wireshark para observar se nossa solicitação seria aceita pelo destinatário.
+
+Utilizando a biblioteca "Scapy" para sobrescrever o IP de origem com o nosso próprio IP: 1.2.3.4, enviamos o pacote para o destino 10.9.0.5; o pacote foi recebido pelo 10.9.0.5 e enviou uma resposta de eco de volta para 1.2.3.4.
+
+Código utilizado:
+
+```py
+#!/usr/bin/env python3
+
+from scapy.all import *
+
+a = IP()
+a.src = '1.2.3.4'
+a.dst = '10.9.0.5'
+b = ICMP()
+p = a/b
+
+ls(a)
+
+send(p)
+```
+
+Execução no container seed-attacker
+
+![image](docs/images/Captura_de_ecrã_2023-12-22_212846.png)
+
+Wireshark capturando de 'br-95e4991e848b'
+
+![image](docs/images/Captura_de_ecrã_2023-12-22_212223.png)
 
 # CTF  Find-my-TLS
 
