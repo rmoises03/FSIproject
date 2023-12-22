@@ -129,13 +129,13 @@ Ping de 1.2.3.4 (sem resposta)
 
 ![image](docs/images/Captura_de_ecrã_2023-12-22_233713.png)
 
-Ping de 1.2.3.4 (com resposta)
-
-![image](docs/images/Captura_de_ecrã_2023-12-22_233005.png)
-
 Execução no container seed-attacker:
 
 ![image](docs/images/Captura_de_ecrã_2023-12-22_233019.png)
+
+Ping de 1.2.3.4 (com resposta)
+
+![image](docs/images/Captura_de_ecrã_2023-12-22_233005.png)
 
 Wireshark
 
