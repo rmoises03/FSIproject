@@ -42,4 +42,31 @@ pkt = sniff(iface='br-95e4991e848b', filter='icmp', prn=print_pkt)
 ## Task 1.2
 
 
+# CTF  Find-my-TLS
+
+- Começamos por descarregar o ficheiro fornecido e abri-lo utilizando o wireshark. De seguinda utilizamos um filtro "Hex Value" e colocamos o valor "52362c11ff0ea3a000e1b48dc2d99e04c6d06ea1a061d5b8ddbf87b001745a27" para percebermos qual a mensagem que deveríamos investigar.
+
+- Percebemos aí que a transmissão que nos interessava era do 814 até ao 828.
+
+![](docs/images/Captura_de_ecrã_2023-12-22_194136.png)
+
+- Desta forma, percebmos que o "frame_start" é 814 e o "frame-end" é 819, visto que é nesse frame em que o handshake termina.
+
+- Para percebermos o "selected_cipher_suite" verificámos no frame 816 qual o cipher_suite utilizado sendo este "TLS_RSA_WITH_AES_128_CBC_SHA256".
+
+![](docs/images/Captura_de_ecrã_2023-12-22_194432.png)
+
+- De forma a calcularmos a "total_encrypted_appdata_exchanged" verificamos nos frames correspondentes à application data o tamanho dos dados cifrados e somamos os mesmos obtendo o valor de 1264(80+1184).
+
+![](docs/images/Captura_de_ecrã_2023-12-22_194717.png)
+
+![](docs/images/Captura_de_ecrã_2023-12-22_194722.png)
+
+- Finalmente, para sabermos o tamanho da mensagem cifrada no handshake que concluí o procedimento "size_of_encrypted_message", fomos ao frame onde termina o handshake (819) e verificamos apenas o tamanho da mensagem que é 80.
+
+![](docs/images/Captura_de_ecrã_2023-12-22_194943.png)
+
+- Concluímos assim que a flag seria flag{814-819-TLS_RSA_WITH_AES_128_CBC_SHA256-1264-80}
+
+
 
