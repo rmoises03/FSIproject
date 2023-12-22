@@ -178,11 +178,13 @@ Ao tentar aceder o webiste
 
 ![](docs/images/dupedwebsite.png)
 
+> O acesso ao website foi feito depois de contornar o aviso do FF, e se tentássemos usar o nome com HTTPS de outro website existente, o utilizador seria alertado
+
 # Task 6 : Launching a Man-In-The-Middle Attack with a Compromised CA
 
 Para podermos torna-nos o MITM, alteramos o nome do servidor target no ficheiro de configuração:
 
- ```bash
+```conf
     <VirtualHost *:443>
         DocumentRoot /var/www/bank32
         ServerName www.github.com
@@ -201,7 +203,8 @@ Para podermos torna-nos o MITM, alteramos o nome do servidor target no ficheiro 
         ServerName www.bank32.com
         DirectoryIndex index_red.html
     </VirtualHost>
-     ```
+```
+
 
 
 ![](docs/images/githu_duped.png)
