@@ -141,6 +141,8 @@ Wireshark
 
 ![image](docs/images/Captura_de_ecrã_2023-12-22_233217.png)
 
+Como visto, o user recebe uma resposta apesar de 1.2.3.4 não existir.
+
 # CTF  Find-my-TLS
 
 - Começamos por descarregar o ficheiro fornecido e abri-lo utilizando o wireshark. De seguinda utilizamos um filtro "Hex Value" e colocamos o valor "52362c11ff0ea3a000e1b48dc2d99e04c6d06ea1a061d5b8ddbf87b001745a27" para percebermos qual a mensagem que deveríamos investigar.
